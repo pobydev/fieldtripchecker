@@ -15,6 +15,7 @@ export function AdminPage() {
   const [message, setMessage] = useState("");
   const [highlighted, setHighlighted] = useState<string | null>(null);
   const [openNotes, setOpenNotes] = useState<Record<string, boolean>>({});
+  const [showSettlement, setShowSettlement] = useState(false);
 
   const load = useCallback(async (showLoading = false) => {
     if (showLoading) setLoading(true);
@@ -147,7 +148,10 @@ export function AdminPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          <button type="button" onClick={() => setShowSettlement((value) => !value)} className="secondary-button col-span-2 sm:col-span-1">
+            {showSettlement ? "정산 숨기기" : "정산 보기"}
+          </button>
           <button type="button" onClick={downloadCsv} className="secondary-button hidden sm:inline-flex">
             <Download size={18} aria-hidden />
             CSV 다운로드
@@ -175,6 +179,8 @@ export function AdminPage() {
         <SummaryCard label="임시 저장" value={`${summary.draft}/12`} warning />
         <SummaryCard label="미입력" value={`${summary.pending}/12`} />
       </section>
+
+      {showSettlement ? <SettlementCard activeDay={activeDay} summary={summary} /> : null}
 
       <section className="grid gap-3 md:hidden">
         {activeRows.map((row) => {
@@ -240,6 +246,62 @@ export function AdminPage() {
       </section>
     </main>
   );
+}
+
+function SettlementCard({
+  activeDay,
+  summary,
+}: {
+  activeDay: DayKey;
+  summary: {
+    participant: number;
+    annualPass: number;
+  };
+}) {
+  const isLotte = activeDay === "lotte";
+  const unitPrice = isLotte ? 31000 : 18000;
+  const supportCount = isLotte ? 17 : 12;
+  const excludedCount = isLotte ? summary.annualPass : 0;
+  const paidTargetCount = Math.max(summary.participant - excludedCount, 0);
+  const supportedCount = Math.min(paidTargetCount, supportCount);
+  const paymentCount = Math.max(paidTargetCount - supportCount, 0);
+  const supportAmount = supportedCount * unitPrice;
+  const paymentAmount = paymentCount * unitPrice;
+
+  return (
+    <section className="card mb-5 space-y-4">
+      <div>
+        <p className="text-[12px] font-bold text-quizlet-violet">{isLotte ? "롯데월드" : "난타공연"} 정산</p>
+        <h2 className="mt-1 text-[24px] font-bold text-stormcloud-ink">예상 결제 금액 {formatCurrency(paymentAmount)}</h2>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+        <SettlementMetric label="학생 1인 금액" value={formatCurrency(unitPrice)} />
+        <SettlementMetric label="참여학생수" value={`${summary.participant}명`} />
+        {isLotte ? <SettlementMetric label="연간이용권 제외" value={`${excludedCount}명`} /> : null}
+        <SettlementMetric label="지원 인원" value={`${supportCount}명`} />
+        <SettlementMetric label="유료 대상" value={`${paidTargetCount}명`} />
+        <SettlementMetric label="지원 적용" value={`${supportedCount}명`} />
+        <SettlementMetric label="실제 결제 인원" value={`${paymentCount}명`} emphasis />
+        <SettlementMetric label="지원 상당액" value={formatCurrency(supportAmount)} />
+      </div>
+    </section>
+  );
+}
+
+function SettlementMetric({ label, value, emphasis = false }: { label: string; value: string; emphasis?: boolean }) {
+  return (
+    <div className={emphasis ? "rounded bg-[rgba(66,85,255,0.08)] p-3 shadow-subtle" : "rounded bg-page-background p-3 shadow-subtle"}>
+      <p className="text-[12px] font-semibold text-slate-text">{label}</p>
+      <p className={emphasis ? "mt-1 font-mono text-[22px] font-bold text-quizlet-violet" : "mt-1 font-mono text-[18px] font-bold text-stormcloud-ink"}>
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function formatCurrency(value: number) {
+  return `${value.toLocaleString("ko-KR")}원`;
 }
 
 function SummaryCard({ label, value, danger = false, warning = false, success = false }: { label: string; value: number | string; danger?: boolean; warning?: boolean; success?: boolean }) {
