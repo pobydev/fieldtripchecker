@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Download, RefreshCcw, RotateCcw } from "lucide-react";
 import { PageHeader } from "@/components/Header";
 import { StatusBadge } from "@/components/StatusBadge";
@@ -16,6 +16,7 @@ export function AdminPage() {
   const [highlighted, setHighlighted] = useState<string | null>(null);
   const [openNotes, setOpenNotes] = useState<Record<string, boolean>>({});
   const [showSettlement, setShowSettlement] = useState(false);
+  const settlementRef = useRef<HTMLDivElement | null>(null);
 
   const load = useCallback(async (showLoading = false) => {
     if (showLoading) setLoading(true);
@@ -130,6 +131,16 @@ export function AdminPage() {
     setOpenNotes((current) => ({ ...current, [key]: !current[key] }));
   }
 
+  function toggleSettlement() {
+    setShowSettlement((value) => {
+      const next = !value;
+      if (next) {
+        window.setTimeout(() => settlementRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+      }
+      return next;
+    });
+  }
+
   return (
     <main className="page-shell">
       <PageHeader title="관리자 화면" />
@@ -149,7 +160,7 @@ export function AdminPage() {
         </div>
 
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-          <button type="button" onClick={() => setShowSettlement((value) => !value)} className="secondary-button col-span-2 sm:col-span-1">
+          <button type="button" onClick={toggleSettlement} className="secondary-button col-span-2 sm:col-span-1">
             {showSettlement ? "정산 숨기기" : "정산 보기"}
           </button>
           <button type="button" onClick={downloadCsv} className="secondary-button hidden sm:inline-flex">
@@ -170,6 +181,12 @@ export function AdminPage() {
       {message ? <div className="card mb-5 bg-practice-orange/35 text-sm font-semibold text-[#8a4b05]">{message}</div> : null}
       {loading ? <div className="card mb-5 text-sm font-normal text-slate-text">불러오는 중입니다.</div> : null}
 
+      {showSettlement ? (
+        <div ref={settlementRef}>
+          <SettlementCard activeDay={activeDay} summary={summary} />
+        </div>
+      ) : null}
+
       <section className="mb-5 grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-7">
         <SummaryCard label="전체 재적" value={summary.enrolled} />
         <SummaryCard label="전체 참여" value={summary.participant} />
@@ -179,8 +196,6 @@ export function AdminPage() {
         <SummaryCard label="임시 저장" value={`${summary.draft}/12`} warning />
         <SummaryCard label="미입력" value={`${summary.pending}/12`} />
       </section>
-
-      {showSettlement ? <SettlementCard activeDay={activeDay} summary={summary} /> : null}
 
       <section className="grid gap-3 md:hidden">
         {activeRows.map((row) => {
@@ -281,7 +296,6 @@ function SettlementCard({
         <SettlementMetric label="참여학생수" value={`${summary.participant}명`} />
         {isLotte ? <SettlementMetric label="연간이용권 제외" value={`${excludedCount}명`} /> : null}
         <SettlementMetric label="지원 인원" value={`${supportCount}명`} />
-        <SettlementMetric label="유료 대상" value={`${paidTargetCount}명`} />
         <SettlementMetric label="실제 결제 인원" value={`${paymentCount}명`} emphasis />
         <SettlementMetric label="예상 결제 금액" value={formatCurrency(paymentAmount)} emphasis />
       </div>
