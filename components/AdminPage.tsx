@@ -147,17 +147,17 @@ export function AdminPage() {
           ))}
         </div>
 
-        <div className="grid gap-2 sm:grid-cols-3">
-          <button type="button" onClick={downloadCsv} className="secondary-button">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          <button type="button" onClick={downloadCsv} className="secondary-button hidden sm:inline-flex">
             <Download size={18} aria-hidden />
             CSV 다운로드
           </button>
-          <button type="button" onClick={() => reset("day")} className="danger-button">
-            <RefreshCcw size={18} aria-hidden />
+          <button type="button" onClick={() => reset("day")} className="danger-button min-h-10 px-3 py-2 text-sm sm:min-h-12 sm:px-5 sm:py-3 sm:text-[16px]">
+            <RefreshCcw size={16} aria-hidden />
             해당 일정 초기화
           </button>
-          <button type="button" onClick={() => reset("all")} className="danger-button">
-            <RotateCcw size={18} aria-hidden />
+          <button type="button" onClick={() => reset("all")} className="danger-button min-h-10 px-3 py-2 text-sm sm:min-h-12 sm:px-5 sm:py-3 sm:text-[16px]">
+            <RotateCcw size={16} aria-hidden />
             전체 초기화
           </button>
         </div>
