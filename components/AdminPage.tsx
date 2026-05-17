@@ -171,9 +171,9 @@ export function AdminPage() {
         <SummaryCard label="전체 참여" value={summary.participant} />
         <SummaryCard label="전체 불참" value={summary.absent} danger />
         {activeDay === "lotte" ? <SummaryCard label="연간이용권" value={summary.annualPass} /> : null}
-        <SummaryCard label="최종 완료" value={summary.finalized} success />
-        <SummaryCard label="임시 저장" value={summary.draft} warning />
-        <SummaryCard label="미입력" value={summary.pending} />
+        <SummaryCard label="최종 완료" value={`${summary.finalized}/12`} success />
+        <SummaryCard label="임시 저장" value={`${summary.draft}/12`} warning />
+        <SummaryCard label="미입력" value={`${summary.pending}/12`} />
       </section>
 
       <section className="grid gap-3 md:hidden">
@@ -242,7 +242,7 @@ export function AdminPage() {
   );
 }
 
-function SummaryCard({ label, value, danger = false, warning = false, success = false }: { label: string; value: number; danger?: boolean; warning?: boolean; success?: boolean }) {
+function SummaryCard({ label, value, danger = false, warning = false, success = false }: { label: string; value: number | string; danger?: boolean; warning?: boolean; success?: boolean }) {
   const valueClass = danger ? "text-danger" : warning ? "text-[#8a4b05]" : success ? "text-quizlet-violet" : "text-stormcloud-ink";
   return (
     <div className="card py-4">

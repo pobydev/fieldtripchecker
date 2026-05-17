@@ -52,9 +52,9 @@ export function ClassSelectPage({ dayKey }: { dayKey: DayKey }) {
       />
 
       <div className="mb-5 grid grid-cols-3 gap-2 sm:gap-3">
-        <Summary label="최종 완료" value={summary.finalized} tone="emerald" />
-        <Summary label="임시 저장" value={summary.draft} tone="amber" />
-        <Summary label="미입력" value={summary.pending} tone="slate" />
+        <Summary label="최종 완료" value={`${summary.finalized}/12`} tone="emerald" />
+        <Summary label="임시 저장" value={`${summary.draft}/12`} tone="amber" />
+        <Summary label="미입력" value={`${summary.pending}/12`} tone="slate" />
       </div>
 
       {loading ? <LoadingBox /> : null}
@@ -101,12 +101,12 @@ export function ClassSelectPage({ dayKey }: { dayKey: DayKey }) {
   );
 }
 
-function Summary({ label, value, tone }: { label: string; value: number; tone: "emerald" | "amber" | "slate" }) {
+function Summary({ label, value, tone }: { label: string; value: number | string; tone: "emerald" | "amber" | "slate" }) {
   const color = tone === "emerald" ? "text-quizlet-violet" : tone === "amber" ? "text-[#8a4b05]" : "text-slate-text";
   return (
     <div className="card px-3 py-4">
       <p className="text-[12px] font-semibold text-slate-text">{label}</p>
-      <p className={`mt-1 font-mono text-[22px] font-bold ${color}`}>{value}반</p>
+      <p className={`mt-1 font-mono text-[22px] font-bold ${color}`}>{value}</p>
     </div>
   );
 }
