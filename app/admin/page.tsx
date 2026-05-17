@@ -1,5 +1,10 @@
+import { AdminGate } from "@/components/AdminGate";
 import { AdminPage } from "@/components/AdminPage";
 
 export default function Page() {
-  return <AdminPage />;
+  return (
+    <AdminGate>
+      <AdminPage />
+    </AdminGate>
+  );
 }

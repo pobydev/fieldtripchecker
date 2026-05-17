@@ -115,7 +115,7 @@ export function AdminPage() {
     if (!window.confirm("입력 데이터를 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.")) return;
     const response = await fetch("/api/reset", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "x-admin-password": "0000" },
       body: JSON.stringify({ scope, dayKey: activeDay }),
     });
     const result = await response.json();
