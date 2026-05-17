@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap");
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-stormcloud-ink: #282e3e;
+  --color-quizlet-violet: #4255ff;
+  --color-page-background: #f6f7fb;
+  --color-ash-border: #d9dde8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--color-page-background);
+}
+
+body {
+  margin: 0;
+  color: var(--color-stormcloud-ink);
+  font-family: "Pretendard", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto min-h-screen w-full max-w-[1200px] px-4 py-5 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply rounded-lg bg-white p-4 shadow-quizlet;
+  }
+
+  .primary-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-quizlet-violet px-5 py-3 text-center text-[16px] font-bold text-white shadow-quizlet-sm transition hover:bg-night-violet focus:outline-none focus:ring-4 focus:ring-[rgba(66,85,255,0.22)] disabled:cursor-not-allowed disabled:bg-light-slate;
+  }
+
+  .filled-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-quizlet-violet px-5 py-3 text-center text-[16px] font-bold text-white shadow-quizlet-sm transition hover:bg-night-violet focus:outline-none focus:ring-4 focus:ring-[rgba(66,85,255,0.22)] disabled:cursor-not-allowed disabled:bg-light-slate;
+  }
+
+  .secondary-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-ash-border bg-transparent px-5 py-3 text-center text-[16px] font-semibold text-quizlet-violet transition hover:bg-white focus:outline-none focus:ring-4 focus:ring-[rgba(66,85,255,0.16)] disabled:cursor-not-allowed disabled:text-light-slate;
+  }
+
+  .danger-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[rgba(242,96,82,0.35)] bg-white px-5 py-3 text-center text-[16px] font-semibold text-danger transition hover:bg-[rgba(242,96,82,0.08)] focus:outline-none focus:ring-4 focus:ring-[rgba(242,96,82,0.16)];
+  }
+
+  .input-field {
+    @apply h-14 w-full rounded border border-ash-border bg-white px-4 text-[16px] font-semibold text-stormcloud-ink outline-none transition placeholder:text-light-slate focus:border-quizlet-violet focus:ring-4 focus:ring-[rgba(66,85,255,0.16)];
+  }
+
+  .label-text {
+    @apply text-[14px] font-bold text-deep-slate;
+  }
+
+  .muted-text {
+    @apply text-[14px] font-normal leading-relaxed text-slate-text;
+  }
+
+  .status-badge {
+    @apply inline-flex items-center whitespace-nowrap rounded px-2 py-1 text-[12px] font-semibold;
+  }
+}
