@@ -2,7 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 
-const ADMIN_PASSWORD = "202621";
+const ADMIN_PASSWORD = "202600";
 const STORAGE_KEY = "fieldtrip-admin-ok";
 
 export function AdminGate({ children }: { children: React.ReactNode }) {
