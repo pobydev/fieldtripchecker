@@ -197,13 +197,13 @@ export function ClassInputPage({ dayKey, classNo }: { dayKey: DayKey; classNo: n
           checked={form.hasNote}
           onChange={(checked) => updateField("hasNote", checked)}
           title="비고 입력"
-          description="특이사항이 있을 때만 입력합니다."
+          description="학생 이름, 질병명, 보호자 연락처 등 개인정보는 입력하지 마세요."
         >
           <textarea
             className="min-h-28 w-full resize-y rounded border border-ash-border bg-white px-4 py-3 text-base font-semibold text-stormcloud-ink outline-none transition placeholder:text-light-slate focus:border-quizlet-violet focus:ring-4 focus:ring-[rgba(66,85,255,0.16)]"
             value={form.note}
             onChange={(event) => updateField("note", event.target.value)}
-            placeholder="필요한 경우에만 입력"
+            placeholder="예: 현장 확인 중, 추후 수정 예정"
           />
         </TogglePanel>
 
