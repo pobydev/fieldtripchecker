@@ -4,7 +4,7 @@ import { isDayKey } from "@/lib/trip";
 
 export async function POST(request: Request) {
   try {
-    const adminPassword = process.env.ADMIN_PASSWORD ?? "0000";
+    const adminPassword = process.env.ADMIN_PASSWORD ?? "202621";
     if (request.headers.get("x-admin-password") !== adminPassword) {
       return NextResponse.json({ error: "관리자 암호가 필요합니다." }, { status: 401 });
     }

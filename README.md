@@ -37,7 +37,7 @@ npm install
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_your-publishable-key
 SUPABASE_SECRET_KEY=sb_secret_your-secret-key
-ADMIN_PASSWORD=0000
+ADMIN_PASSWORD=202621
 ```
 
 `SUPABASE_SECRET_KEY`는 서버 API Route에서만 사용하며 클라이언트에 노출하지 않습니다.
