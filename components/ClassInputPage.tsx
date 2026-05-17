@@ -197,7 +197,7 @@ export function ClassInputPage({ dayKey, classNo }: { dayKey: DayKey; classNo: n
           checked={form.hasNote}
           onChange={(checked) => updateField("hasNote", checked)}
           title="비고 입력"
-          description="학생 이름, 질병명, 보호자 연락처 등 개인정보는 입력하지 마세요."
+          description="개인정보는 여기에 입력하지 말고 단톡방에 공유해 주세요."
         >
           <textarea
             className="min-h-28 w-full resize-y rounded border border-ash-border bg-white px-4 py-3 text-base font-semibold text-stormcloud-ink outline-none transition placeholder:text-light-slate focus:border-quizlet-violet focus:ring-4 focus:ring-[rgba(66,85,255,0.16)]"
