@@ -131,7 +131,7 @@ export function AdminPage() {
 
   return (
     <main className="page-shell">
-      <PageHeader title="관리자 화면" description="변경 사항은 Realtime으로 반영되며, 10초마다 한 번 더 보정됩니다." />
+      <PageHeader title="관리자 화면" />
 
       <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="grid grid-cols-2 gap-1 rounded-lg bg-white p-1 shadow-quizlet">
