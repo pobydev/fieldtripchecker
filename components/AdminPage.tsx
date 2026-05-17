@@ -263,10 +263,11 @@ function SettlementCard({
   const supportCount = isLotte ? 17 : 12;
   const excludedCount = isLotte ? summary.annualPass : 0;
   const paidTargetCount = Math.max(summary.participant - excludedCount, 0);
-  const supportedCount = Math.min(paidTargetCount, supportCount);
   const paymentCount = Math.max(paidTargetCount - supportCount, 0);
-  const supportAmount = supportedCount * unitPrice;
   const paymentAmount = paymentCount * unitPrice;
+  const formula = isLotte
+    ? `(참여학생 ${summary.participant}명 - 연간이용권 ${excludedCount}명 - 지원 ${supportCount}명) × ${formatCurrency(unitPrice)}`
+    : `(참여학생 ${summary.participant}명 - 지원 ${supportCount}명) × ${formatCurrency(unitPrice)}`;
 
   return (
     <section className="card mb-5 space-y-4">
@@ -281,9 +282,12 @@ function SettlementCard({
         {isLotte ? <SettlementMetric label="연간이용권 제외" value={`${excludedCount}명`} /> : null}
         <SettlementMetric label="지원 인원" value={`${supportCount}명`} />
         <SettlementMetric label="유료 대상" value={`${paidTargetCount}명`} />
-        <SettlementMetric label="지원 적용" value={`${supportedCount}명`} />
         <SettlementMetric label="실제 결제 인원" value={`${paymentCount}명`} emphasis />
-        <SettlementMetric label="지원 상당액" value={formatCurrency(supportAmount)} />
+        <SettlementMetric label="예상 결제 금액" value={formatCurrency(paymentAmount)} emphasis />
+      </div>
+
+      <div className="rounded bg-page-background p-3 text-sm font-semibold text-slate-text shadow-subtle">
+        계산식: {formula} = {formatCurrency(paymentAmount)}
       </div>
     </section>
   );
